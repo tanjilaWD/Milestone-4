@@ -43,18 +43,18 @@ buttons.forEach(btn =>{
       console.log(card);
       const ProductName = card.querySelector('.product-name').textContent;
       const price = parseInt(card.querySelector('.product-price').textContent);
-      const category = card.querySelector('.category-name');
+      const category = card.querySelector('.category-name').textContent;
       const product = {
-        ProductName,
-        price,
-        category,
+        name: ProductName,
+        productPrice: price,
+        ProductCategory: category,
         quantity: 1
       }
       addToCart(product)
     })
 })
 function addToCart(product){
- const existingItem = cart.find(item => item.name == product.ProductName);
+ const existingItem = cart.find(item => item.name == product.name);
  console.log(existingItem);
 
  if(existingItem){
@@ -62,4 +62,21 @@ function addToCart(product){
  }else{
     cart.push(product)
  }
+}
+
+const cartItemsDiv = document.getElementById('cartItems');
+function updateCart(){
+  cartItemsDiv.innerHTML = '';
+  let total = 0;
+  let totalItems = 0;
+  cart.forEach(item => {
+   total = total + (item.productPrice * item.quantity);
+   totalItems = totalItems + item.quantity;
+
+   const div = document.createElement('div');
+   div.innerHTML = `
+       ${item.name} (x ${item.quantity}) - ${item.price * item.quantity};
+       <button>Remove</button>
+   `
+  })
 }
